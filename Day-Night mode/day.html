@@ -7,24 +7,32 @@
 	<meta name="author" content="SwarajM">
 	<title>The Mode</title>
     <style>
-	
+	:root{
+        --color:rgb(143, 146, 168);
+        --background-color: rgb(38, 53, 124);
+        --border: rgb(3, 0, 11);
+        --color1:rgb(41, 10, 121);
+    }
     *{
         padding:0px;
         margin:0px;
     }
     body{
         background-color:rgb(134, 174, 186);
-        
+        color:var(--color1);
     
     }
     ul{
         display:flex;
         
+        background-color:var(--background-color);
     }
     ul li{
         width:8vw;
         display:flex;
         list-style: none;
+        color: var(--color);
+        background-color:Var(--background-color);
         padding: 30px;
         margin:auto;
         width:auto;
@@ -32,6 +40,7 @@
     }
     li{
         display:flex;
+        /* border:1px solid var(--border); */
         width:auto;
         border-radius: 7px;
         padding:10px;
@@ -40,6 +49,8 @@
     }
     a{
         text-decoration: none;
+        color: var(--color);
+        background-color:Var(--background-color);
          
     }
     a:hover{
@@ -50,10 +61,15 @@
         margin:20px;
     }
     h2{
+        --color:rgb(20, 5, 59);
+        --bgcolor:rgb(92, 139, 154);
+        color:var(--color);
+        background-color: var(--bgcolor);
         padding:5px;
         margin:17px;
     }
     P{
+        border:1px solid var(--border);
         padding:9px;
         margin:9px;
         border-radius:7px;
