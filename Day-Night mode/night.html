@@ -7,14 +7,20 @@
 	<meta name="author" content="SwarajM">
 	<title>The Mode</title>
 	<style>
-        
+        :root{
+    --color:rgb(75, 119, 144);
+    --background-color: rgb(21, 8, 71);
+    --border: rgb(180, 171, 206);
+    --color1:rgb(44, 19, 101);
+}
 *{
     padding:0px;
     margin:0px;
 }
 body{
     background-color:rgb(88, 89, 174);
-    
+    color:var(--color1);
+
 }
 ul{
     display:flex;
@@ -25,6 +31,8 @@ ul li{
     width:8vw;
     display:flex;
     list-style: none;
+    color: var(--color);
+    background-color:Var(--background-color);
     padding: 30px;
     margin:auto;
     width:auto;
@@ -42,7 +50,8 @@ li{
 a{
     text-decoration: none;
     color: var(--color);
-   
+    background-color:Var(--background-color);
+     
 }
 a:hover{
     color:rgb(28, 43, 159);
@@ -75,7 +84,7 @@ P{
             <li><a href="#">About</a></li>
             <li><a href="#">Testmonials</a></li>
             <li><a href="#">Contact us</a></li>
-            <li><a href="day.html"><img src="C:\Users\Abhiruchi\Downloads\brightness.png" width="40px"></a></li>
+            <li><a href="day.html">Switch Mode</a></li>
         </ul>
     </div>
     <div class="nav1">
