@@ -1,7 +1,9 @@
+# This is secret Language creator where we can Code or Decode the language. This simply make our sentence or string into complex one and for decoding it removes all complexity from sentence. 
+
 import string 
 import random
 
-# Code
+# Coding function
 def code(): 
     message=input("Enter your Message to code here: ")
     words=message.split(" ")
@@ -16,7 +18,7 @@ def code():
     print(" ".join(coded))
 
 
-# Decode
+# Decoding function
 def Decode():
     message=input("Enter your Message to decode here: ")
     words=message.split(" ")
@@ -31,7 +33,7 @@ def Decode():
     print(" ".join(decoded))
 
 
-# Main
+# Main function
 def main():
     print("Welcome to Secret Code Lab\n")
     while True:
