@@ -59,3 +59,36 @@ def voice_translate():
         print(f"{error} Error: {e}")
         SpeakIT.say(error)
         SpeakIT.runAndWait()
+
+if __name__ == '__main__':
+    """
+    Main function. 
+    """
+    SpeakIT = pyttsx3.init()
+    
+    print("Welcome to Voice Translator!")
+    SpeakIT.say("Welcome to Voice Translator!")
+    SpeakIT.runAndWait()
+
+    user_name = input("Please enter your name: ")
+    SpeakIT.say(f"Hello, {user_name}!")
+    SpeakIT.runAndWait()
+
+    intro(user_name)
+
+    while True:
+        command = input("Enter the 1 for Start and 2 for Quit: ")
+        my_commands(command)
+
+        # calling different functions
+        if command.lower() == "2":
+            SpeakIT.say(f"Goodbye, {user_name}!")
+            SpeakIT.runAndWait()
+            break
+        
+        elif command.lower() == "1":
+            voice_translate()
+        else:
+            SpeakIT.say("Wrong input!")
+            SpeakIT.runAndWait()
+
