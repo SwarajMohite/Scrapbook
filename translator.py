@@ -1,3 +1,5 @@
+""" pip install pyttsx3 google_trans_new translate googletrans speech_recognition """
+
 import pyttsx3  # Module to speak the text
 from google_trans_new import google_translator # New Module to Translate.
 from translate import Translator # To translate
