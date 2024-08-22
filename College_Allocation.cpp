@@ -2,6 +2,8 @@
 #include <ctime>
 #include <cstring>
 #include <fstream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -9,13 +11,17 @@ struct Student {
     string name;
     string category;
     float marks;
-    string chosenCollege;
+    string gender;
+    int age;
+    string college;
 };
+
+vector<Student> studentDatabase;
 
 void saveStudentDetails(const Student& s) {
     ofstream outFile("StudentDetails.txt", ios::app);
     if (outFile.is_open()) {
-        outFile << s.name << "\n" << s.category << "\n" << s.marks << "\n" << s.chosenCollege << "\n";
+        outFile << s.name << "\n" << s.category << "\n" << s.marks << "\n" << s.college << "\n";
         outFile.close();
         cout << "\nStudent details saved to 'StudentDetails.txt' successfully!" << endl;
     } else {
@@ -23,14 +29,14 @@ void saveStudentDetails(const Student& s) {
     }
 }
 
-void searchStudentByName(const string& name) {
+void searchStudentByName(const string& searchName) {
     ifstream inFile("StudentDetails.txt");
     string line;
     bool found = false;
 
     if (inFile.is_open()) {
         while (getline(inFile, line)) {
-            if (line == name) {
+            if (line == searchName) {
                 found = true;
                 cout << "\nStudent Found: " << endl;
                 cout << "Name: " << line << endl;
@@ -52,7 +58,7 @@ void searchStudentByName(const string& name) {
     }
 }
 
-void deleteStudentRecord(const string& name) {
+void deleteStudentRecord(const string& searchName) {
     ifstream inFile("StudentDetails.txt");
     ofstream tempFile("temp.txt");
     string line;
@@ -60,7 +66,7 @@ void deleteStudentRecord(const string& name) {
 
     if (inFile.is_open() && tempFile.is_open()) {
         while (getline(inFile, line)) {
-            if (line == name) {
+            if (line == searchName) {
                 found = true;
                 // Skip the next 3 lines (category, marks, chosenCollege)
                 for (int i = 0; i < 3; i++) getline(inFile, line);
@@ -84,7 +90,7 @@ void deleteStudentRecord(const string& name) {
     }
 }
 
-void updateStudentDetails(const string& name) {
+void updateStudentDetails(const string& searchName) {
     ifstream inFile("StudentDetails.txt");
     ofstream tempFile("temp.txt");
     string line;
@@ -93,28 +99,28 @@ void updateStudentDetails(const string& name) {
 
     if (inFile.is_open() && tempFile.is_open()) {
         while (getline(inFile, line)) {
-            if (line == name) {
+            if (line == searchName) {
                 found = true;
                 cout << "\nStudent Found: " << endl;
                 s.name = line;
                 getline(inFile, s.category);
                 getline(inFile, line);
                 s.marks = stof(line);
-                getline(inFile, s.chosenCollege);
+                getline(inFile, s.college);
 
                 cout << "Current Details:\n";
                 cout << "Name: " << s.name << endl;
                 cout << "Category: " << s.category << endl;
                 cout << "10th Percentage: " << s.marks << "%" << endl;
-                cout << "Chosen College: " << s.chosenCollege << endl;
+                cout << "Chosen College: " << s.college << endl;
 
                 cout << "\nEnter new 10th Percentage: ";
                 cin >> s.marks;
                 cout << "Enter new Chosen College: ";
                 cin.ignore(); // Clear the input buffer
-                getline(cin, s.chosenCollege);
+                getline(cin, s.college);
 
-                tempFile << s.name << "\n" << s.category << "\n" << s.marks << "\n" << s.chosenCollege << "\n";
+                tempFile << s.name << "\n" << s.category << "\n" << s.marks << "\n" << s.college << "\n";
             } else {
                 tempFile << line << "\n";
             }
@@ -133,6 +139,40 @@ void updateStudentDetails(const string& name) {
     } else {
         cout << "Error opening file!" << endl;
     }
+}
+
+void viewAllStudents() {
+    cout << "\nDisplaying all student records:\n";
+    for (const auto& student : studentDatabase) {
+        cout << "\nStudent Name: " << student.name << endl;
+        cout << "Category: " << student.category << endl;
+        cout << "Marks: " << student.marks << endl;
+        cout << "Gender: " << student.gender << endl;
+        cout << "Age: " << student.age << endl;
+        cout << "Chosen College: " << student.college << endl;
+    }
+}
+
+void viewStatistics() {
+    int totalStudents = studentDatabase.size();
+    int maleCount = 0, femaleCount = 0, otherCount = 0;
+    float totalMarks = 0.0;
+
+    for (const auto& student : studentDatabase) {
+        totalMarks += student.marks;
+        if (student.gender == "Male") maleCount++;
+        else if (student.gender == "Female") femaleCount++;
+        else otherCount++;
+    }
+
+    float averageMarks = totalMarks / totalStudents;
+
+    cout << "\nStatistics:\n";
+    cout << "Total Students: " << totalStudents << endl;
+    cout << "Average Marks: " << averageMarks << "%" << endl;
+    cout << "Male Students: " << maleCount << endl;
+    cout << "Female Students: " << femaleCount << endl;
+    cout << "Other Students: " << otherCount << endl;
 }
 
 int main() {
@@ -171,7 +211,7 @@ int main() {
             }
         } while (s1.marks < 0 || s1.marks > 100);
 
-        //  Collect Category and Evaluate Eligibility
+        // Collect Category and Evaluate Eligibility
         do {
             cout << "Enter your category (Open/Reserved/Minor): ";
             cin >> s1.category;
@@ -181,7 +221,7 @@ int main() {
             }
         } while (s1.category != "Open" && s1.category != "Reserved" && s1.category != "Minor");
 
-        //  Recommend Colleges Based on Marks and Category
+        // Recommend Colleges Based on Marks and Category
         string colleges[5];
         int count = 0;
 
@@ -204,7 +244,7 @@ int main() {
             cout << i + 1 << ". " << colleges[i] << endl;
         }
 
-        //Choose College and Confirm Seat
+        // Choose College and Confirm Seat
         int choice;
         do {
             cout << "\nEnter the number corresponding to the college you want to choose: ";
@@ -215,18 +255,19 @@ int main() {
             }
         } while (choice < 1 || choice > count);
 
-        s1.chosenCollege = colleges[choice - 1];
-        cout << "\nCongrats! Your seat at " << s1.chosenCollege << " is confirmed." << endl;
+        s1.college = colleges[choice - 1];
+        cout << "\nCongrats! Your seat at " << s1.college << " is confirmed." << endl;
 
         // Store and Display Student Details
         cout << "\nStudent Details:\n";
         cout << "Name: " << s1.name << endl;
         cout << "Category: " << s1.category << endl;
         cout << "10th Percentage: " << s1.marks << "%" << endl;
-        cout << "Chosen College: " << s1.chosenCollege << endl;
+        cout << "Chosen College: " << s1.college << endl;
 
         // Save Student Details to File
         saveStudentDetails(s1);
+        studentDatabase.push_back(s1); // Add to the in-memory database
 
         // Menu
         int dayMenuChoice;
@@ -235,7 +276,9 @@ int main() {
             cout << "1. Search Student Details by Name" << endl;
             cout << "2. Delete Student Record" << endl;
             cout << "3. Update Student Details" << endl;
-            cout << "4. Exit" << endl;
+            cout << "4. View All Students" << endl;
+            cout << "5. View Statistics" << endl;
+            cout << "6. Exit" << endl;
             cout << "Enter your choice: ";
             cin >> dayMenuChoice;
 
@@ -247,7 +290,7 @@ int main() {
                     getline(cin, searchName);
                     searchStudentByName(searchName);
                     break;
-                
+
                 case 2:
                     cout << "\nEnter the name of the student to delete: ";
                     cin.ignore();
@@ -263,13 +306,21 @@ int main() {
                     break;
 
                 case 4:
+                    viewAllStudents();
+                    break;
+
+                case 5:
+                    viewStatistics();
+                    break;
+
+                case 6:
                     cout << "\nExiting the program. Thank you!" << endl;
                     break;
 
                 default:
                     cout << "\nInvalid choice! Please select a valid option." << endl;
             }
-        } while (dayMenuChoice != 4);
+        } while (dayMenuChoice != 6);
     } else {
         cout << "Login failed! Invalid username or password." << endl;
     }
