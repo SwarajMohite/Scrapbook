@@ -346,3 +346,23 @@ int main() {
 
     return 0;
 }
+
+
+/* 
+## Admission Portal Program
+
+This program is a C++ console application designed to manage student admissions. It provides functionality to store, update, delete, and retrieve student records while also offering college recommendations based on a student's 10th-grade percentage. The program features a simple login system and includes a variety of tools for managing student data.
+
+## 1. Login System
+   - Ensures only authorized users can access the system.
+   - Default credentials:
+     - Username: `admin`
+     - Password: `password`
+
+## 2. Student Record Management
+   
+## 3. College Recommendation
+  
+## 4. File Operations
+   
+*/
