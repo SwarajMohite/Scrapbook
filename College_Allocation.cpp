@@ -176,7 +176,7 @@ void viewStatistics() {
 }
 
 void listStudentsByCategory(const string& category) {
-    cout << "\nStudents in category '" << category << "':\n";
+    cout << "\nListing students in category: " << category << endl;
     for (const auto& student : studentDatabase) {
         if (student.category == category) {
             cout << "\nStudent Name: " << student.name << endl;
@@ -209,7 +209,7 @@ int main() {
 
         // Collect and Evaluate Marks
         Student s1;
-        cout << "Enter your name: ";
+        cout << "Enter name of Student: ";
         cin.ignore(); // To clear the newline character from the input buffer
         getline(cin, s1.name);
 
@@ -260,79 +260,86 @@ int main() {
         do {
             cout << "\nEnter the number corresponding to the college you want to choose: ";
             cin >> choice;
+
             if (choice < 1 || choice > count) {
-                cout << "Invalid choice! Please select a valid college number from the list." << endl;
+                cout << "Invalid choice! Please choose a valid college number." << endl;
             }
         } while (choice < 1 || choice > count);
 
         s1.college = colleges[choice - 1];
+        cout << "\nYou have chosen " << s1.college << ". Your seat is confirmed!" << endl;
 
-        cout << "\nCongratulations, " << s1.name << "! You have successfully chosen " << s1.college << "." << endl;
+        // Additional Details
+        cout << "Enter your gender (Male/Female/Other): ";
+        cin >> s1.gender;
 
-        // Save student details
-        saveStudentDetails(s1);
+        cout << "Enter your age: ";
+        cin >> s1.age;
+
+        // Save details and add to the database
         studentDatabase.push_back(s1);
+        saveStudentDetails(s1);
 
-        // Further Options
+        // Display Menu for Further Actions
         int option;
         do {
-            cout << "\nWhat would you like to do next?" << endl;
-            cout << "1. View all students" << endl;
-            cout << "2. Search for a student by name" << endl;
-            cout << "3. Delete a student record" << endl;
-            cout << "4. Update student details" << endl;
-            cout << "5. View statistics" << endl;
-            cout << "6. List students by category" << endl;
-            cout << "7. Exit" << endl;
+            cout << "\nMenu:\n";
+            cout << "1. Search Student by Name\n";
+            cout << "2. Delete Student Record\n";
+            cout << "3. Update Student Details\n";
+            cout << "4. View All Students\n";
+            cout << "5. View Statistics\n";
+            cout << "6. List Students by Category\n";
+            cout << "7. Exit\n";
             cout << "Enter your choice: ";
             cin >> option;
 
             switch (option) {
-                case 1:
-                    viewAllStudents();
-                    break;
-                case 2: {
+                case 1: {
                     string searchName;
-                    cout << "Enter the name of the student you want to search for: ";
+                    cout << "Enter the name of the student to search: ";
                     cin.ignore();
                     getline(cin, searchName);
                     searchStudentByName(searchName);
                     break;
                 }
-                case 3: {
+                case 2: {
                     string searchName;
-                    cout << "Enter the name of the student record you want to delete: ";
+                    cout << "Enter the name of the student to delete: ";
                     cin.ignore();
                     getline(cin, searchName);
                     deleteStudentRecord(searchName);
                     break;
                 }
-                case 4: {
+                case 3: {
                     string searchName;
-                    cout << "Enter the name of the student whose details you want to update: ";
+                    cout << "Enter the name of the student to update: ";
                     cin.ignore();
                     getline(cin, searchName);
                     updateStudentDetails(searchName);
                     break;
                 }
+                case 4:
+                    viewAllStudents();
+                    break;
                 case 5:
                     viewStatistics();
                     break;
                 case 6: {
                     string category;
-                    cout << "Enter the category you want to list students for (Open/Reserved/Minor): ";
-                    cin.ignore();
-                    getline(cin, category);
+                    cout << "Enter the category to list students (Open/Reserved/Minor): ";
+                    cin >> category;
                     listStudentsByCategory(category);
                     break;
                 }
                 case 7:
-                    cout << "Exiting program. Goodbye!" << endl;
+                    cout << "Exiting the program. Goodbye!" << endl;
                     break;
                 default:
-                    cout << "Invalid option! Please enter a valid number." << endl;
+                    cout << "Invalid choice! Please select a valid option." << endl;
             }
         } while (option != 7);
+
     } else {
         cout << "Login failed! Invalid username or password." << endl;
     }
